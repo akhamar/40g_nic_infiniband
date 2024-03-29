@@ -501,6 +501,8 @@ On each machine start iperf3 (in server and client modes respectively) adding th
 
 # FLASH HP (model number: 649281-B21)
 
+[Info](https://forums.servethehome.com/index.php?threads/flashing-stock-mellanox-firmware-to-oem-emc-connectx-3-ib-ethernet-dual-port-qsfp-adapter.20525/#post-198015)
+
 ## Download latest Mellanox Firmware tools and install them  + dependencies
 ```
 apt update && apt install gcc make dkms unzip linux-headers-$(uname -r)
