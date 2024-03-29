@@ -497,3 +497,66 @@ On each machine start iperf3 (in server and client modes respectively) adding th
 5. [Search for HP 764285-B21 Dual-port 10/40 GBit QSFP ConnectX-3 Adapter on ebay.com (US)](https://www.ebay.com/sch/i.html?_from=R40&_nkw=HP%20764285-B21&_sacat=0&rt=nc&_udhi=20)
 6. [Search for infiniband 40gb card on ebay.com (US)](https://www.ebay.com/sch/i.html?LH_CAds=&_ex_kw=&_fpos=&_fspt=1&_mPrRngCbx=1&_nkw=infiniband+40gb+card&_sacat=58058&_sadis=&_sop=15&_udhi=20&_udlo=5&_fosrp=1)
 7. [ Search for MC2207130-001 1-meter QSFP Passive Copper Cable under $30 on ebay.com (US)](https://www.ebay.com/sch/i.html?_from=R40&_nkw=Mellanox+MC2207130-001&_sacat=0&_sop=15&_udhi=30&LH_BIN=1&rt=nc&LH_PrefLoc=1)
+
+
+# FLASH HP (model number: 649281-B21)
+
+## Download latest Mellanox Firmware tools and install them  + dependencies:
+apt update && apt install gcc make dkms unzip linux-headers-$(uname -r)
+wget https://www.mellanox.com/downloads/MFT/mft-4.18.0-106-x86_64-deb.tgz
+tar -xvf mft-4.18.0-106-x86_64-deb.tgz && cd mft-4.18.0-106-x86_64-deb
+./install.sh
+
+## Start MST service:
+```
+mst start
+```
+ou
+```
+mst start --with_unknow
+mst status
+```
+
+## copy the dev address with cr0 in it, like:
+> /dev/mst/mt4099_pci_cr0
+
+## Use that address in the following commands
+
+### Download latest FCBT firmware and unzip:
+```
+wget http://www.mellanox.com/downloads/firmware/fw-ConnectX3-rel-2_42_5000-MCX354A-FCB_A2-A5-FlexBoot-3.4.752.bin.zip
+unzip fw-ConnectX3-rel-2_42_5000-MCX354A-FCB_A2-A5-FlexBoot-3.4.752.bin.zip
+```
+
+### Backup the cards current board definition file just in case
+```
+flint -d /dev/mst/mt4099_pci_cr0 dc orig_firmware.ini
+```
+
+### Flash the FCBT image to the card
+```
+flint -d /dev/mst/mt4099_pci_cr0 -i fw-ConnectX3-rel-2_42_5000-MCX354A-FCB_A2-A5-FlexBoot-3.4.752.bin -allow_psid_change burn
+```
+
+Cold boot the server when done
+
+
+# Config HP (model number: 649281-B21)
+
+## Get the device
+
+> lspci
+
+```
+01:00.0 Ethernet controller: Mellanox Technologies MT27500 Family [ConnectX-3]
+```
+
+## Config the device
+
+```
+mlxconfig -d 0000:01:00.0 set LINK_TYPE_P1=2 LINK_TYPE_P2=2
+mlxconfig -d 0000:01:00.0 set BOOT_OPTION_ROM_EN_P1=false
+mlxconfig -d 0000:01:00.0 set BOOT_OPTION_ROM_EN_P2=false
+mlxconfig -d 0000:01:00.0 set LEGACY_BOOT_PROTOCOL_P1=0
+mlxconfig -d 0000:01:00.0 set LEGACY_BOOT_PROTOCOL_P2=0
+```
