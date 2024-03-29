@@ -501,11 +501,14 @@ On each machine start iperf3 (in server and client modes respectively) adding th
 
 # FLASH HP (model number: 649281-B21)
 
-## Download latest Mellanox Firmware tools and install them  + dependencies:
+## Download latest Mellanox Firmware tools and install them  + dependencies
+```
 apt update && apt install gcc make dkms unzip linux-headers-$(uname -r)
+apt install mstflint infiniband-diags
 wget https://www.mellanox.com/downloads/MFT/mft-4.18.0-106-x86_64-deb.tgz
 tar -xvf mft-4.18.0-106-x86_64-deb.tgz && cd mft-4.18.0-106-x86_64-deb
 ./install.sh
+```
 
 ## Start MST service:
 ```
