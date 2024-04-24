@@ -507,8 +507,8 @@ On each machine start iperf3 (in server and client modes respectively) adding th
 ```
 apt update && apt install gcc make dkms unzip linux-headers-$(uname -r)
 apt install mstflint infiniband-diags
-wget https://www.mellanox.com/downloads/MFT/mft-4.18.0-106-x86_64-deb.tgz
-tar -xvf mft-4.18.0-106-x86_64-deb.tgz && cd mft-4.18.0-106-x86_64-deb
+wget https://content.mellanox.com/MFT/mft-4.27.0-83-x86_64-deb.tgz
+tar -xvf mft-4.27.0-83-x86_64-deb.tgz && cd mft-4.27.0-83-x86_64-deb
 ./install.sh
 ```
 
