@@ -518,7 +518,7 @@ mst start
 ```
 ou
 ```
-mst start --with_unknow
+mst start --with_unknown
 mst status
 ```
 
