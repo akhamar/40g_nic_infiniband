@@ -565,3 +565,51 @@ mlxconfig -d 0000:01:00.0 set BOOT_OPTION_ROM_EN_P2=false
 mlxconfig -d 0000:01:00.0 set LEGACY_BOOT_PROTOCOL_P1=0
 mlxconfig -d 0000:01:00.0 set LEGACY_BOOT_PROTOCOL_P2=0
 ```
+
+# Helpful command
+
+Start MST
+```bash
+mst start
+
+or
+
+mst start --with_unknown
+```
+
+
+Device id
+```bash
+lspci | grep Ethernet
+```
+> 01:00.0 Ethernet controller: Mellanox Technologies MT27710 Family [ConnectX-4 Lx]
+
+
+Flint device info
+```bash
+flint -d 01:00.0 query
+```
+
+
+Flint backup firmware
+```bash
+flint -d 01:00.0 ri orig-MCX4131A-BCAT-01.bin
+```
+
+
+Flint backup device config
+```bash
+flint -d 01:00.0 dc orig-MCX4131A-BCAT-01.ini
+```
+
+
+Flint burn firmware
+```bash
+flint -d 01:00.0 -i fw-ConnectX4Lx-rel-14_32_1010-MCX4131A-BCA_Ax-UEFI-14.25.17-FlexBoot-3.6.502.bin burn
+```
+
+
+Device config
+```bash
+mlxconfig -d 01:00.0 query
+```
